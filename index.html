@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PulsePlan | Sign Up</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="auth-body">
+    <main class="auth-page">
+      <section class="auth-visual">
+        <img src="assets/cover.jpg" alt="" />
+        <div class="auth-copy">
+          <a class="brand auth-brand" href="index.html">
+            <img src="assets/logo.svg" alt="PulsePlan" class="logo" />
+            <span>
+              <strong>PulsePlan</strong>
+              <span>Adaptive fitness coach</span>
+            </span>
+          </a>
+          <h1>Personalized plans start with your profile.</h1>
+          <p>Sign up or log in, enter your training details, then get a dashboard built around your goal, equipment, schedule, and recovery.</p>
+        </div>
+      </section>
+
+      <section class="auth-panel">
+        <div class="auth-tabs" role="tablist" aria-label="Account mode">
+          <button class="auth-tab active" type="button" data-auth-tab="signup">Sign Up</button>
+          <button class="auth-tab" type="button" data-auth-tab="login">Log In</button>
+        </div>
+
+        <form id="signup-form" class="account-form active">
+          <p class="kicker">New Account</p>
+          <h2>Create your PulsePlan account</h2>
+          <label>Name<input name="name" autocomplete="name" required /></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Password<input name="password" type="password" autocomplete="new-password" minlength="6" required /></label>
+          <button class="btn primary full" type="submit">Continue to Profile</button>
+        </form>
+
+        <form id="login-form" class="account-form">
+          <p class="kicker">Welcome Back</p>
+          <h2>Log in to continue</h2>
+          <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+          <button class="btn primary full" type="submit">Log In</button>
+        </form>
+
+        <p id="auth-note" class="note">This prototype stores demo account data locally in your browser.</p>
+      </section>
+    </main>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>

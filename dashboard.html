@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PulsePlan | Personalized Plans</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="app-shell">
+      <a class="brand" href="dashboard.html">
+        <img src="assets/logo.svg" alt="PulsePlan" class="logo" />
+        <span>
+          <strong>PulsePlan</strong>
+          <span>Self-hosted fitness coach</span>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="Primary">
+        <a class="active" href="dashboard.html">Dashboard</a>
+        <a href="programs.html">Programs</a>
+        <a href="library.html">Library</a>
+        <a href="coach.html">Coach</a>
+      </nav>
+      <a class="btn primary" href="onboarding.html">Edit Info</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <img src="assets/cover.jpg" alt="" class="hero-media" />
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="eyebrow">Personalized Plans</p>
+          <h1 id="plan-hero-title">Your plan is ready.</h1>
+          <p id="plan-hero-copy" class="hero-copy">
+            Start here for your active workout, readiness score, nutrition target,
+            weekly load, and recovery check-in.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="onboarding.html">Update My Info</a>
+            <a class="btn ghost link-btn" href="coach.html">Ask Coach</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboard" class="workspace">
+        <aside class="side-rail" aria-label="Application sections">
+          <a class="rail-item active" href="dashboard.html" title="Today">T</a>
+          <a class="rail-item" href="programs.html" title="Programs">P</a>
+          <a class="rail-item" href="library.html" title="Library">L</a>
+          <a class="rail-item" href="coach.html" title="Coach">C</a>
+        </aside>
+
+        <div class="dashboard-grid">
+          <section class="panel span-2">
+            <div class="panel-head">
+              <div>
+                <p class="kicker">Today</p>
+                <h2 id="today-title">Upper Strength Foundation</h2>
+              </div>
+              <button id="complete-workout" class="btn compact">Log Session</button>
+            </div>
+            <div id="workout-list" class="workout-list"></div>
+          </section>
+
+          <section class="panel stats-panel">
+            <p class="kicker">Readiness</p>
+            <div class="readiness-ring" aria-label="Readiness score">
+              <span id="readiness-score">82</span>
+            </div>
+            <div class="metrics">
+              <span><strong id="week-streak">4</strong> week streak</span>
+              <span><strong id="logged-sessions">12</strong> sessions</span>
+            </div>
+          </section>
+
+          <section class="panel">
+            <p class="kicker">Nutrition</p>
+            <h3>AI nutrition targets</h3>
+            <div class="macro-row">
+              <label>Goal <input id="goal-calories" type="number" value="2300" /></label>
+              <label>Eaten <input id="eaten-calories" type="number" value="1480" /></label>
+            </div>
+            <div class="calorie-result">
+              <span id="remaining-calories">820</span>
+              <small>calories remaining</small>
+            </div>
+            <div id="macro-targets" class="target-list"></div>
+          </section>
+
+          <section class="panel">
+            <p class="kicker">Progress</p>
+            <h3>Weekly load</h3>
+            <div id="load-chart" class="bar-chart"></div>
+          </section>
+
+          <section class="panel">
+            <p class="kicker">Recovery</p>
+            <h3>Check-in</h3>
+            <div class="slider-row">
+              <label for="sleep">Sleep</label>
+              <input id="sleep" type="range" min="1" max="10" value="7" />
+            </div>
+            <div class="slider-row">
+              <label for="energy">Energy</label>
+              <input id="energy" type="range" min="1" max="10" value="8" />
+            </div>
+            <p id="recovery-note" class="note">Solid day for normal progression.</p>
+          </section>
+
+          <section class="panel span-2">
+            <p class="kicker">AI Recommendation</p>
+            <h3 id="program-type">Program type</h3>
+            <div id="recommendation-list" class="recommendation-list"></div>
+          </section>
+
+          <section class="panel span-2">
+            <p class="kicker">Workout Reference</p>
+            <h3>Workout types at a glance</h3>
+            <p class="section-copy">Use these cards to understand the main session categories before you open the coach or library.</p>
+            <div id="workout-types" class="workout-types-grid"></div>
+          </section>
+
+          <section class="panel span-2">
+            <p class="kicker">Workout Icons</p>
+            <h3>Fast visual references</h3>
+            <p class="section-copy">These icons help users identify common movements at a glance.</p>
+            <div id="workout-icons" class="workout-icon-grid"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>PulsePlan prototype</span>
+      <span>Dashboard, programs, library, and coach are now separate pages.</span>
+    </footer>
+
+    <div id="onboard-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="onboard-title">
+      <div class="modal-panel">
+        <div class="panel-head">
+          <div>
+            <p class="kicker">Quick Onboarding</p>
+            <h2 id="onboard-title">Create your starting plan</h2>
+          </div>
+          <button type="button" id="cancel-onboard" class="icon-btn" aria-label="Close">x</button>
+        </div>
+        <form id="onboard-form">
+          <div class="form-grid">
+            <label>Age<input name="age" type="number" min="10" max="120" required /></label>
+            <label>Training age<select name="level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+            <label>Available days<select name="days"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+            <label>Equipment<select name="equipment"><option>Bodyweight</option><option>Dumbbells</option><option selected>Full gym</option><option>Resistance bands</option></select></label>
+            <label>Goal<input name="goal" placeholder="Example: build muscle, faster 5K PB" value="Build muscle" required /></label>
+            <label>Food target<select name="nutrition"><option>Maintenance</option><option>Calorie deficit</option><option selected>Lean surplus</option></select></label>
+          </div>
+          <div class="modal-actions">
+            <button type="button" id="reset-demo" class="btn">Reset Demo</button>
+            <button type="submit" class="btn primary">Generate Plan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>

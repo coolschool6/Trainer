@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PulsePlan | Coach</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="app-shell">
+      <a class="brand" href="dashboard.html">
+        <img src="assets/logo.svg" alt="PulsePlan" class="logo" />
+        <span>
+          <strong>PulsePlan</strong>
+          <span>Self-hosted fitness coach</span>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="Primary">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="programs.html">Programs</a>
+        <a href="library.html">Library</a>
+        <a class="active" href="coach.html">Coach</a>
+      </nav>
+      <a class="btn primary" href="onboarding.html">Edit Info</a>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <p class="eyebrow">Pulse Coach</p>
+        <h1>Make changes conversationally without losing the plan.</h1>
+        <p class="section-copy">Tell the coach your equipment, goals, schedule, or limitations and it will rebuild your saved plan around those constraints.</p>
+      </section>
+
+      <section id="coach" class="coach-shell page-coach">
+        <aside class="conversation-list">
+          <div class="panel-head">
+            <div>
+              <p class="kicker">Coach UI</p>
+              <h2>Conversations</h2>
+            </div>
+          </div>
+          <button class="conversation active">Plan adjustments</button>
+          <button class="conversation">Nutrition check</button>
+          <button class="conversation">Recovery review</button>
+          <div class="coach-prompts">
+            <p class="kicker">Try</p>
+            <span>I only have dumbbells and bands, make a 4 day muscle plan.</span>
+            <span>No gym and bad knees, 3 days per week.</span>
+            <span>I have a bike and kettlebells, improve endurance.</span>
+          </div>
+          <div class="coach-quick-guide">
+            <p class="kicker">Workout types</p>
+            <a href="library.html#library">Strength training</a>
+            <a href="library.html#library">Conditioning</a>
+            <a href="library.html#library">Mobility</a>
+          </div>
+        </aside>
+        <section class="chat-panel">
+          <div class="chat-header">
+            <div>
+              <p class="kicker">Pulse Coach</p>
+              <h2>Ask for swaps, logging, or pacing</h2>
+            </div>
+            <button id="clear-chat" class="btn compact">Clear</button>
+          </div>
+          <div id="messages" class="messages" aria-live="polite"></div>
+          <form id="chat-form" class="chat-form">
+            <input id="chat-input" placeholder="Tell me your equipment, goal, days, limitations, or ask anything..." autocomplete="off" />
+            <button class="btn primary" type="submit">Send</button>
+          </form>
+        </section>
+      </section>
+
+      <section class="section container">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Quick Guide</p>
+            <h2>How the coach handles different workout types</h2>
+          </div>
+        </div>
+        <div class="coach-guide-grid">
+          <article class="guide-card">
+            <strong>Strength days</strong>
+            <p>Use compound lifts, track reps, and push progression when recovery is stable.</p>
+          </article>
+          <article class="guide-card">
+            <strong>Conditioning days</strong>
+            <p>Keep pace repeatable, prefer low-impact options when joints are irritated, and avoid turning every cardio day into a test.</p>
+          </article>
+          <article class="guide-card">
+            <strong>Mobility days</strong>
+            <p>Reduce fatigue, open stiff areas, and prep the body for the next quality session instead of chasing intensity.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Swap Ideas</p>
+            <h2>Examples the coach can use right away</h2>
+          </div>
+        </div>
+        <div class="coach-guide-grid">
+          <article class="guide-card">
+            <strong>Lower body swap</strong>
+            <p>Replace lunges with step-ups, goblet squats, or split squats when knees need a cleaner pattern.</p>
+          </article>
+          <article class="guide-card">
+            <strong>Short session swap</strong>
+            <p>Convert a 45-minute lifting day into a 20-25 minute high-efficiency circuit without losing the main movement pattern.</p>
+          </article>
+          <article class="guide-card">
+            <strong>5K adjustment</strong>
+            <p>Shift a fat-loss block into intervals, tempo work, and easy aerobic sessions when the goal changes to running faster.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>PulsePlan prototype</span>
+      <span>Coach history is stored locally in your browser.</span>
+    </footer>
+
+    <div id="onboard-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="onboard-title">
+      <div class="modal-panel">
+        <div class="panel-head">
+          <div>
+            <p class="kicker">Quick Onboarding</p>
+            <h2 id="onboard-title">Create your starting plan</h2>
+          </div>
+          <button type="button" id="cancel-onboard" class="icon-btn" aria-label="Close">x</button>
+        </div>
+        <form id="onboard-form">
+          <div class="form-grid">
+            <label>Age<input name="age" type="number" min="10" max="120" required /></label>
+            <label>Training age<select name="level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+            <label>Available days<select name="days"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+            <label>Equipment<select name="equipment"><option>Bodyweight</option><option>Dumbbells</option><option selected>Full gym</option><option>Resistance bands</option></select></label>
+            <label>Goal<input name="goal" placeholder="Example: build muscle, faster 5K PB" value="Build muscle" required /></label>
+            <label>Food target<select name="nutrition"><option>Maintenance</option><option>Calorie deficit</option><option selected>Lean surplus</option></select></label>
+          </div>
+          <div class="modal-actions">
+            <button type="button" id="reset-demo" class="btn">Reset Demo</button>
+            <button type="submit" class="btn primary">Generate Plan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>

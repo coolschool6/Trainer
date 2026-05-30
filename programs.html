@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PulsePlan | Programs</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="app-shell">
+      <a class="brand" href="dashboard.html">
+        <img src="assets/logo.svg" alt="PulsePlan" class="logo" />
+        <span>
+          <strong>PulsePlan</strong>
+          <span>Self-hosted fitness coach</span>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="Primary">
+        <a href="dashboard.html">Dashboard</a>
+        <a class="active" href="programs.html">Programs</a>
+        <a href="library.html">Library</a>
+        <a href="coach.html">Coach</a>
+      </nav>
+      <a class="btn primary" href="onboarding.html">Edit Info</a>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <p class="eyebrow">Programs</p>
+        <h1>Training blocks with enough structure to progress and enough room to adapt.</h1>
+        <p class="section-copy">Create blocks, review focus areas, and keep your plan library separate from today's execution.</p>
+      </section>
+
+      <section id="programs" class="section">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Plan Library</p>
+            <h2>Programs</h2>
+          </div>
+          <button id="add-program" class="btn">Add Program</button>
+        </div>
+        <div id="program-grid" class="program-grid"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Program Types</p>
+            <h2>What each block is for</h2>
+          </div>
+        </div>
+        <div class="coach-guide-grid">
+          <article class="guide-card">
+            <strong>Strength Base</strong>
+            <p>Best when you want progressive overload, muscle gain, or a stronger foundation for sport.</p>
+          </article>
+          <article class="guide-card">
+            <strong>Lean Engine</strong>
+            <p>Best when you want fat loss without abandoning performance or conditioning.</p>
+          </article>
+          <article class="guide-card">
+            <strong>Home Reset</strong>
+            <p>Best when schedule, travel, or equipment limits force a simpler plan.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>PulsePlan prototype</span>
+      <span>Program data is stored locally in your browser.</span>
+    </footer>
+
+    <div id="onboard-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="onboard-title">
+      <div class="modal-panel">
+        <div class="panel-head">
+          <div>
+            <p class="kicker">Quick Onboarding</p>
+            <h2 id="onboard-title">Create your starting plan</h2>
+          </div>
+          <button type="button" id="cancel-onboard" class="icon-btn" aria-label="Close">x</button>
+        </div>
+        <form id="onboard-form">
+          <div class="form-grid">
+            <label>Age<input name="age" type="number" min="10" max="120" required /></label>
+            <label>Training age<select name="level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+            <label>Available days<select name="days"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+            <label>Equipment<select name="equipment"><option>Bodyweight</option><option>Dumbbells</option><option selected>Full gym</option><option>Resistance bands</option></select></label>
+            <label>Goal<input name="goal" placeholder="Example: build muscle, faster 5K PB" value="Build muscle" required /></label>
+            <label>Food target<select name="nutrition"><option>Maintenance</option><option>Calorie deficit</option><option selected>Lean surplus</option></select></label>
+          </div>
+          <div class="modal-actions">
+            <button type="button" id="reset-demo" class="btn">Reset Demo</button>
+            <button type="submit" class="btn primary">Generate Plan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>

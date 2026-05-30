@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PulsePlan | Your Info</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="app-shell">
+      <a class="brand" href="dashboard.html">
+        <img src="assets/logo.svg" alt="PulsePlan" class="logo" />
+        <span>
+          <strong>PulsePlan</strong>
+          <span>Profile setup</span>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="Primary">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="programs.html">Programs</a>
+        <a href="library.html">Library</a>
+        <a href="coach.html">Coach</a>
+      </nav>
+      <a class="btn primary" href="dashboard.html">Skip</a>
+    </header>
+
+    <main>
+      <section class="page-hero intake-hero">
+        <p class="eyebrow">Your Info</p>
+        <h1>Tell PulsePlan what your training life actually looks like.</h1>
+        <p class="section-copy">Your answers generate the first workout, calorie target, readiness baseline, and plan cards.</p>
+      </section>
+
+      <section class="section">
+        <form id="profile-form" class="intake-form panel">
+          <div class="form-section">
+            <p class="kicker">Body</p>
+            <div class="form-grid">
+              <label>Name<input name="name" autocomplete="name" required /></label>
+              <label>Age<input name="age" type="number" min="10" max="120" required /></label>
+              <label>Height (cm)<input name="height" type="number" min="90" max="240" required /></label>
+              <label>Weight (kg)<input name="weight" type="number" min="30" max="250" required /></label>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <p class="kicker">Training</p>
+            <div class="form-grid">
+              <label>Training level<select name="level"><option>Beginner</option><option selected>Intermediate</option><option>Advanced</option></select></label>
+              <label>Available days/week<select name="days"><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></label>
+              <label>Session length<select name="sessionLength"><option>30 minutes</option><option selected>45 minutes</option><option>60 minutes</option><option>75 minutes</option></select></label>
+              <label>Equipment<select name="equipment"><option>Bodyweight</option><option>Dumbbells</option><option selected>Full gym</option><option>Resistance bands</option></select></label>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <p class="kicker">Goals</p>
+            <div class="form-grid">
+              <label>Primary goal<input name="goal" placeholder="Example: build muscle, faster 5K PB, lose fat, stronger squat" value="Build muscle" required /></label>
+              <label>Nutrition target<select name="nutrition"><option>Maintenance</option><option>Calorie deficit</option><option selected>Lean surplus</option></select></label>
+              <label>Sleep quality<select name="sleep"><option value="5">Rough</option><option value="7" selected>Okay</option><option value="9">Great</option></select></label>
+              <label>Energy today<select name="energy"><option value="5">Low</option><option value="7">Steady</option><option value="9" selected>High</option></select></label>
+            </div>
+          </div>
+
+          <label>Injuries, limitations, or preferences
+            <textarea name="limitations" rows="4" placeholder="Example: sensitive knees, no running, prefers machines"></textarea>
+          </label>
+
+          <div class="section-block">
+            <p class="kicker">What this affects</p>
+            <div class="coach-guide-grid">
+              <article class="guide-card">
+                <strong>Workout selection</strong>
+                <p>The app swaps exercises based on equipment, injuries, and schedule.</p>
+              </article>
+              <article class="guide-card">
+                <strong>Nutrition targets</strong>
+                <p>Calories and protein targets move with your goal and current training load.</p>
+              </article>
+              <article class="guide-card">
+                <strong>Recovery advice</strong>
+                <p>Sleep, energy, and soreness help adjust the next session before you overdo it.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <a class="btn" href="index.html">Back</a>
+            <button class="btn primary" type="submit">Generate My Plans</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>

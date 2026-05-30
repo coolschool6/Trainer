@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PulsePlan | Exercise Library</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="app-shell">
+      <a class="brand" href="dashboard.html">
+        <img src="assets/logo.svg" alt="PulsePlan" class="logo" />
+        <span>
+          <strong>PulsePlan</strong>
+          <span>Self-hosted fitness coach</span>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="Primary">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="programs.html">Programs</a>
+        <a class="active" href="library.html">Library</a>
+        <a href="coach.html">Coach</a>
+      </nav>
+      <a class="btn primary" href="onboarding.html">Edit Info</a>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <p class="eyebrow">Exercise Wiki</p>
+        <h1>Find the right movement before it reaches the workout.</h1>
+        <p class="section-copy">Search exercise ideas by movement, muscle, equipment, or training purpose.</p>
+      </section>
+
+      <section id="library" class="section split">
+        <div>
+          <p class="kicker">Library</p>
+          <h2>Search movement ideas</h2>
+          <p class="section-copy">
+            A compact front-end exercise library modeled after wger categories,
+            muscles, and equipment filters.
+          </p>
+          <div class="search-row">
+            <input id="exercise-search" placeholder="Search exercises, muscles, equipment..." />
+            <select id="exercise-filter" aria-label="Filter category">
+              <option value="all">All</option>
+              <option value="strength">Strength</option>
+              <option value="conditioning">Conditioning</option>
+              <option value="mobility">Mobility</option>
+            </select>
+          </div>
+          <div class="search-row search-row-secondary">
+            <select id="exercise-equipment-filter" aria-label="Filter equipment">
+              <option value="all">All equipment</option>
+              <option value="bodyweight">Bodyweight</option>
+              <option value="dumbbells">Dumbbells</option>
+              <option value="barbell">Barbell</option>
+              <option value="bands">Resistance bands</option>
+              <option value="kettlebell">Kettlebell</option>
+              <option value="bike">Bike</option>
+              <option value="full-gym">Full gym</option>
+            </select>
+            <select id="exercise-muscle-filter" aria-label="Filter muscle group">
+              <option value="all">All muscles</option>
+              <option value="Push">Push</option>
+              <option value="Legs">Legs</option>
+              <option value="Back">Back</option>
+              <option value="Core">Core</option>
+              <option value="Cardio">Cardio</option>
+              <option value="Mobility">Mobility</option>
+            </select>
+          </div>
+          <div class="exercise-summary-row">
+            <span id="exercise-count">0 movements</span>
+            <span>Use multiple filters together to narrow down a workout swap.</span>
+          </div>
+          <div id="exercise-list" class="exercise-list"></div>
+          <div id="exercise-empty" class="empty-state" hidden>
+            No exercises matched these filters. Try clearing one filter or searching a broader term.
+          </div>
+          <section class="section-block">
+            <p class="kicker">Workout types</p>
+            <h2>How to do each type of workout</h2>
+            <p class="section-copy">Use these quick reference cards to understand the purpose, setup, and pacing of each session type.</p>
+            <div id="workout-types" class="workout-types-grid"></div>
+          </section>
+          <section class="section-block">
+            <p class="kicker">Workout icons</p>
+            <h2>Quick visual library</h2>
+            <p class="section-copy">These icons give each movement a quick visual identity before the user opens the details.</p>
+            <div id="workout-icons" class="workout-icon-grid"></div>
+          </section>
+        </div>
+        <div class="image-panel">
+          <img src="assets/about.jpg" alt="Training notebook and fitness gear" />
+          <div>
+            <strong>Library-first planning</strong>
+            <span>Build sessions from movements, not guesswork.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Reference Assets</p>
+            <h2>Workout visuals and how-to sources</h2>
+          </div>
+        </div>
+        <div class="asset-grid">
+          <article class="asset-card">
+            <img src="assets/workouts/bench-press.svg" alt="Bench press illustration" />
+            <div>
+              <strong>Bench Press</strong>
+              <span>Use for chest, triceps, and pressing mechanics.</span>
+            </div>
+          </article>
+          <article class="asset-card">
+            <img src="assets/workouts/squat.svg" alt="Squat illustration" />
+            <div>
+              <strong>Squat</strong>
+              <span>Use for lower-body strength and movement quality.</span>
+            </div>
+          </article>
+          <article class="asset-card">
+            <img src="assets/workouts/mobility.svg" alt="Exercise illustration" />
+            <div>
+              <strong>Mobility and warm-up</strong>
+              <span>Useful for recovery blocks and prep sessions.</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>PulsePlan prototype</span>
+      <span>Use the coach page when you need swaps or modifications.</span>
+    </footer>
+
+    <div id="onboard-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="onboard-title">
+      <div class="modal-panel">
+        <div class="panel-head">
+          <div>
+            <p class="kicker">Quick Onboarding</p>
+            <h2 id="onboard-title">Create your starting plan</h2>
+          </div>
+          <button type="button" id="cancel-onboard" class="icon-btn" aria-label="Close">x</button>
+        </div>
+        <form id="onboard-form">
+          <div class="form-grid">
+            <label>Age<input name="age" type="number" min="10" max="120" required /></label>
+            <label>Training age<select name="level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+            <label>Available days<select name="days"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+            <label>Equipment<select name="equipment"><option>Bodyweight</option><option>Dumbbells</option><option selected>Full gym</option><option>Resistance bands</option></select></label>
+            <label>Goal<input name="goal" placeholder="Example: build muscle, faster 5K PB" value="Build muscle" required /></label>
+            <label>Food target<select name="nutrition"><option>Maintenance</option><option>Calorie deficit</option><option selected>Lean surplus</option></select></label>
+          </div>
+          <div class="modal-actions">
+            <button type="button" id="reset-demo" class="btn">Reset Demo</button>
+            <button type="submit" class="btn primary">Generate Plan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
