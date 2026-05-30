@@ -448,7 +448,7 @@ textarea {
 
 .auth-body {
   min-height: 100vh;
-  background: var(--ink);
+  background: var(--bg);
 }
 
 .auth-page {
@@ -1241,5 +1241,599 @@ textarea {
 
   .badge {
     width: fit-content;
+  }
+}
+
+.coach-skin,
+.coach-body,
+.fitness-body,
+.redirect-body {
+  --bg: #061017;
+  --surface: #0d1821;
+  --surface-2: #132331;
+  --ink: #f4fbff;
+  --muted: #9cb0be;
+  --line: rgba(133, 173, 200, 0.18);
+  --accent: #62e6c1;
+  --accent-2: #5b8cff;
+  --blue: #5b8cff;
+  --green: #62e6c1;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+  background:
+    radial-gradient(circle at top left, rgba(91, 140, 255, 0.22), transparent 28%),
+    radial-gradient(circle at 86% 12%, rgba(98, 230, 193, 0.18), transparent 24%),
+    linear-gradient(180deg, #061017 0%, #08141c 100%);
+  color: var(--ink);
+}
+
+.coach-skin .auth-panel,
+.coach-skin .account-form,
+.coach-skin .top-nav,
+.coach-body .panel,
+.coach-body .app-shell,
+.coach-body .chat-panel,
+.fitness-body .panel,
+.fitness-body .app-shell,
+.fitness-body .chat-panel,
+.redirect-body .panel {
+  background: rgba(10, 20, 28, 0.84);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.coach-body .app-shell,
+.fitness-body .app-shell,
+.coach-skin .app-shell {
+  border-bottom: 1px solid var(--line);
+}
+
+.coach-skin input,
+.coach-skin select,
+.coach-skin textarea,
+.coach-body input,
+.coach-body select,
+.coach-body textarea,
+.fitness-body input,
+.fitness-body select,
+.fitness-body textarea,
+.redirect-body input,
+.redirect-body select,
+.redirect-body textarea {
+  background: rgba(11, 21, 29, 0.95);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.coach-skin input::placeholder,
+.coach-skin textarea::placeholder,
+.coach-body input::placeholder,
+.coach-body textarea::placeholder,
+.fitness-body input::placeholder,
+.fitness-body textarea::placeholder {
+  color: rgba(228, 242, 250, 0.45);
+}
+
+.coach-skin .section-copy,
+.coach-skin .note,
+.coach-skin .auth-brand span,
+.coach-body .section-copy,
+.coach-body .note,
+.fitness-body .section-copy,
+.fitness-body .note,
+.redirect-body .section-copy {
+  color: rgba(228, 242, 250, 0.72);
+}
+
+.coach-skin .auth-visual::after {
+  background: linear-gradient(0deg, rgba(2, 10, 15, 0.92), rgba(2, 10, 15, 0.15));
+}
+
+.coach-auth-page {
+  min-height: 100vh;
+}
+
+.coach-visual {
+  align-items: center;
+}
+
+.coach-auth-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.coach-avatar-stage,
+.coach-intro-avatar {
+  position: relative;
+  width: fit-content;
+}
+
+.coach-avatar,
+.coach-intro-avatar img {
+  width: min(360px, 100%);
+  height: auto;
+  filter: drop-shadow(0 24px 50px rgba(0, 0, 0, 0.35));
+  animation: float 8s ease-in-out infinite;
+}
+
+.live-chip,
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 8px 12px;
+  border: 1px solid rgba(98, 230, 193, 0.24);
+  border-radius: 999px;
+  background: rgba(8, 22, 29, 0.76);
+  color: #dffcf4;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.live-chip::before,
+.status-chip span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 8px rgba(98, 230, 193, 0.12);
+}
+
+.coach-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.coach-stats-grid article,
+.coach-live-card,
+.reveal-grid div,
+.goal-track div,
+.history-list div,
+.achievement-list span,
+.display-row div,
+.progress-node,
+.goal-badges span {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(16, 30, 40, 0.86);
+}
+
+.coach-stats-grid strong,
+.coach-live-card strong,
+.reveal-grid strong,
+.goal-track strong,
+.history-list strong,
+.achievement-list strong,
+.display-row strong {
+  color: var(--ink);
+}
+
+.coach-stats-grid span,
+.coach-live-card p,
+.reveal-grid span,
+.goal-track span,
+.history-list span,
+.achievement-list span,
+.display-row span,
+.progress-node small,
+.goal-badges span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.goal-panel,
+.milestone-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.goal-badges,
+.progress-map {
+  display: grid;
+  gap: 10px;
+}
+
+.goal-badges {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.goal-badges span {
+  text-align: center;
+}
+
+.milestone-orbital {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-height: 82px;
+}
+
+.milestone-orbital span {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(98, 230, 193, 0.9), rgba(91, 140, 255, 0.24));
+  box-shadow: 0 0 0 10px rgba(98, 230, 193, 0.08);
+  animation: pulse 2.8s ease-in-out infinite;
+}
+
+.milestone-orbital span:nth-child(2) { animation-delay: 0.4s; }
+.milestone-orbital span:nth-child(3) { animation-delay: 0.8s; }
+
+.progress-map {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+.progress-node {
+  display: grid;
+  gap: 8px;
+}
+
+.progress-node span {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(98, 230, 193, 0.12);
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.progress-node.active {
+  box-shadow: 0 0 0 1px rgba(98, 230, 193, 0.28), 0 16px 30px rgba(91, 140, 255, 0.14);
+}
+
+.progress-node.upcoming {
+  background: rgba(11, 21, 29, 0.92);
+}
+
+.progress-node.future {
+  opacity: 0.88;
+}
+
+.coach-auth-panel {
+  gap: 16px;
+}
+
+.auth-start-btn {
+  margin-top: 6px;
+}
+
+.coach-launch,
+.fitness-os {
+  width: min(1260px, calc(100% - 24px));
+  margin: 24px auto 0;
+  display: grid;
+  gap: 18px;
+}
+
+.coach-intro,
+.os-hero-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(250px, 0.9fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.coach-intro-actions,
+.hero-actions,
+.onboarding-actions,
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.coach-live-card,
+.reveal-card,
+.generation-panel,
+.conversation-card {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 4px);
+  background: rgba(7, 18, 25, 0.82);
+  box-shadow: var(--shadow);
+}
+
+.onboarding-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.onboarding-topline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+}
+
+.onboarding-progress-shell {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.progress-ring {
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) 36%, rgba(255, 255, 255, 0.08) 0);
+  box-shadow: inset 0 0 0 10px rgba(10, 20, 28, 0.94);
+}
+
+.progress-ring span {
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.onboarding-flow {
+  display: grid;
+  gap: 14px;
+}
+
+.conversation-stage h2,
+.reveal-card h2,
+.generation-panel h2 {
+  margin-top: 6px;
+}
+
+.conversation-response,
+.choice-grid,
+.generation-sequence,
+.plan-reveal {
+  display: grid;
+  gap: 12px;
+}
+
+.response-pill,
+.response-hint {
+  width: fit-content;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(98, 230, 193, 0.12);
+  color: var(--ink);
+}
+
+.choice-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.choice-chip,
+.conversation {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 14px;
+  background: rgba(18, 31, 41, 0.96);
+  color: var(--ink);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.choice-chip.active,
+.conversation.active {
+  background: linear-gradient(135deg, rgba(98, 230, 193, 0.22), rgba(91, 140, 255, 0.26));
+  border-color: rgba(98, 230, 193, 0.34);
+  box-shadow: 0 12px 30px rgba(91, 140, 255, 0.18);
+}
+
+.answer-field {
+  gap: 10px;
+}
+
+.answer-field span {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.answer-field input {
+  background: rgba(11, 21, 29, 0.95);
+  color: var(--ink);
+}
+
+.generation-stack {
+  display: grid;
+  gap: 10px;
+}
+
+.generation-item {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(18, 31, 41, 0.9);
+}
+
+.generation-item span {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(98, 230, 193, 0.16);
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.generation-item.done,
+.generation-item.active {
+  border-color: rgba(98, 230, 193, 0.28);
+}
+
+.generation-item.active {
+  background: rgba(91, 140, 255, 0.14);
+}
+
+.plan-reveal-grid,
+.goal-track,
+.history-list,
+.achievement-list,
+.display-row {
+  display: grid;
+  gap: 12px;
+}
+
+.plan-reveal-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 14px 0;
+}
+
+.fitness-shell-header .status-chip {
+  justify-self: center;
+}
+
+.fitness-os {
+  grid-template-columns: 1fr;
+  padding-bottom: 150px;
+}
+
+.os-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.os-hero-avatar {
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+}
+
+.os-hero-avatar img {
+  width: min(320px, 100%);
+  height: auto;
+}
+
+.mission-panel .workout-list,
+.history-list,
+.achievement-list {
+  margin-top: 14px;
+}
+
+.goal-track {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+.macro-row.display-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 12px;
+}
+
+.floating-coach {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: min(360px, calc(100vw - 24px));
+  max-height: calc(100vh - 110px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  z-index: 30;
+}
+
+.floating-coach .messages {
+  min-height: 220px;
+}
+
+.floating-coach .coach-prompts {
+  margin-top: 0;
+}
+
+.floating-coach .conversation {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.redirect-body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.redirect-panel {
+  width: min(700px, calc(100% - 24px));
+  text-align: center;
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+}
+
+@keyframes float {
+  0%,
+  100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%,
+  100% { transform: scale(1); opacity: 0.88; }
+  50% { transform: scale(0.92); opacity: 1; }
+}
+
+@media (max-width: 980px) {
+  .coach-intro,
+  .os-hero-panel,
+  .onboarding-topline,
+  .coach-stats-grid,
+  .plan-reveal-grid,
+  .os-grid,
+  .choice-grid,
+  .goal-track,
+  .macro-row.display-row,
+  .goal-badges,
+  .progress-map {
+    grid-template-columns: 1fr;
+  }
+
+  .fitness-shell-header .status-chip {
+    justify-self: start;
+  }
+
+  .floating-coach {
+    width: min(420px, calc(100vw - 16px));
+  }
+}
+
+@media (max-width: 620px) {
+  .coach-launch,
+  .fitness-os {
+    width: calc(100% - 16px);
+  }
+
+  .coach-intro,
+  .os-hero-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .floating-coach {
+    position: static;
+    width: 100%;
+    max-height: none;
+  }
+
+  .progress-ring {
+    width: 64px;
+    height: 64px;
+  }
+
+  .choice-grid {
+    grid-template-columns: 1fr;
   }
 }

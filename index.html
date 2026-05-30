@@ -6,47 +6,66 @@
     <title>PulsePlan | Sign Up</title>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
-  <body class="auth-body">
-    <main class="auth-page">
-      <section class="auth-visual">
+  <body class="auth-body coach-skin" data-page="auth">
+    <main class="auth-page coach-auth-page">
+      <section class="auth-visual coach-visual">
         <img src="assets/cover.jpg" alt="" />
-        <div class="auth-copy">
+        <div class="auth-copy coach-auth-copy">
           <a class="brand auth-brand" href="index.html">
             <img src="assets/logo.svg" alt="PulsePlan" class="logo" />
             <span>
               <strong>PulsePlan</strong>
-              <span>Adaptive fitness coach</span>
+              <span>AI fitness coach</span>
             </span>
           </a>
-          <h1>Personalized plans start with your profile.</h1>
-          <p>Sign up or log in, enter your training details, then get a dashboard built around your goal, equipment, schedule, and recovery.</p>
+          <div class="coach-avatar-stage">
+            <img src="assets/workouts/coach-avatar.svg" alt="PulsePlan AI coach" class="coach-avatar" />
+            <span class="live-chip">Coach Online</span>
+          </div>
+          <h1>Welcome to PulsePlan.</h1>
+          <p>I’ll build your fitness strategy based on your body, goals, schedule, equipment, and lifestyle. You’ll meet the coach first, not a form.</p>
+          <div class="coach-stats-grid">
+            <article>
+              <strong>2 minutes</strong>
+              <span>to build your profile</span>
+            </article>
+            <article>
+              <strong>One coach</strong>
+              <span>rebuilds plans on demand</span>
+            </article>
+            <article>
+              <strong>Adaptive OS</strong>
+              <span>dashboard + coaching in one place</span>
+            </article>
+          </div>
+          <button class="btn primary full auth-start-btn" type="button" data-auth-tab="signup">Let's Build My Plan</button>
         </div>
       </section>
 
-      <section class="auth-panel">
+      <section class="auth-panel coach-auth-panel">
         <div class="auth-tabs" role="tablist" aria-label="Account mode">
           <button class="auth-tab active" type="button" data-auth-tab="signup">Sign Up</button>
           <button class="auth-tab" type="button" data-auth-tab="login">Log In</button>
         </div>
 
         <form id="signup-form" class="account-form active">
-          <p class="kicker">New Account</p>
-          <h2>Create your PulsePlan account</h2>
+          <p class="kicker">Create access</p>
+          <h2>Start your coach-led experience</h2>
           <label>Name<input name="name" autocomplete="name" required /></label>
           <label>Email<input name="email" type="email" autocomplete="email" required /></label>
           <label>Password<input name="password" type="password" autocomplete="new-password" minlength="6" required /></label>
-          <button class="btn primary full" type="submit">Continue to Profile</button>
+          <button class="btn primary full" type="submit">Continue to Coach Introduction</button>
         </form>
 
         <form id="login-form" class="account-form">
-          <p class="kicker">Welcome Back</p>
-          <h2>Log in to continue</h2>
+          <p class="kicker">Welcome back</p>
+          <h2>Pick up where your coach left off</h2>
           <label>Email<input name="email" type="email" autocomplete="email" required /></label>
           <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
-          <button class="btn primary full" type="submit">Log In</button>
+          <button class="btn primary full" type="submit">Enter Coach Flow</button>
         </form>
 
-        <p id="auth-note" class="note">This prototype stores demo account data locally in your browser.</p>
+        <p id="auth-note" class="note">After sign-up or login, you’ll land in a conversational onboarding flow instead of a traditional dashboard.</p>
       </section>
     </main>
 

@@ -6,90 +6,92 @@
     <title>PulsePlan | Your Info</title>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
-  <body>
-    <header class="app-shell">
+  <body class="coach-body" data-page="onboarding">
+    <header class="app-shell coach-app-shell">
       <a class="brand" href="dashboard.html">
         <img src="assets/logo.svg" alt="PulsePlan" class="logo" />
         <span>
           <strong>PulsePlan</strong>
-          <span>Profile setup</span>
+          <span>Coach introduction</span>
         </span>
       </a>
-      <nav class="top-nav" aria-label="Primary">
-        <a href="dashboard.html">Dashboard</a>
-        <a href="programs.html">Programs</a>
-        <a href="library.html">Library</a>
-        <a href="coach.html">Coach</a>
-      </nav>
-      <a class="btn primary" href="dashboard.html">Skip</a>
+      <a class="btn primary" href="dashboard.html">Skip to Dashboard</a>
     </header>
 
-    <main>
-      <section class="page-hero intake-hero">
-        <p class="eyebrow">Your Info</p>
-        <h1>Tell PulsePlan what your training life actually looks like.</h1>
-        <p class="section-copy">Your answers generate the first workout, calorie target, readiness baseline, and plan cards.</p>
+    <main class="coach-launch">
+      <section class="coach-intro panel">
+        <div class="coach-intro-copy">
+          <p class="eyebrow">Conversational onboarding</p>
+          <h1>Meet your AI fitness coach.</h1>
+          <p class="section-copy">I’ll ask one question at a time, build the plan in the open, and then reveal your blueprint when the profile is complete.</p>
+          <div class="coach-intro-actions">
+            <button class="btn primary" type="button" data-onboarding-action="start">Let's Build My Plan</button>
+            <a class="btn" href="index.html">Back to login</a>
+          </div>
+        </div>
+        <div class="coach-intro-avatar">
+          <img src="assets/workouts/coach-avatar.svg" alt="PulsePlan AI coach" />
+          <div class="coach-live-card">
+            <span class="live-chip">Coach Online</span>
+            <strong>Analyzing your training profile</strong>
+            <p>Dark mode. Progressive plan. Human-feeling coaching.</p>
+          </div>
+        </div>
       </section>
 
-      <section class="section">
-        <form id="profile-form" class="intake-form panel">
-          <div class="form-section">
-            <p class="kicker">Body</p>
-            <div class="form-grid">
-              <label>Name<input name="name" autocomplete="name" required /></label>
-              <label>Age<input name="age" type="number" min="10" max="120" required /></label>
-              <label>Height (cm)<input name="height" type="number" min="90" max="240" required /></label>
-              <label>Weight (kg)<input name="weight" type="number" min="30" max="250" required /></label>
+      <section class="panel onboarding-panel">
+        <div class="onboarding-topline">
+          <div>
+            <p class="kicker">Plan builder</p>
+            <h2>Tell me about the athlete I’m coaching.</h2>
+          </div>
+          <div class="onboarding-progress-shell">
+            <div class="progress-ring"><span id="onboarding-progress">0%</span></div>
+            <div>
+              <strong id="onboarding-step-label">Welcome step</strong>
+              <p id="onboarding-coach-copy" class="section-copy">I’ll ask the right questions and build your training strategy without a long form.</p>
             </div>
           </div>
+        </div>
 
-          <div class="form-section">
-            <p class="kicker">Training</p>
-            <div class="form-grid">
-              <label>Training level<select name="level"><option>Beginner</option><option selected>Intermediate</option><option>Advanced</option></select></label>
-              <label>Available days/week<select name="days"><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></label>
-              <label>Session length<select name="sessionLength"><option>30 minutes</option><option selected>45 minutes</option><option>60 minutes</option><option>75 minutes</option></select></label>
-              <label>Equipment<select name="equipment"><option>Bodyweight</option><option>Dumbbells</option><option selected>Full gym</option><option>Resistance bands</option></select></label>
-            </div>
-          </div>
-
-          <div class="form-section">
-            <p class="kicker">Goals</p>
-            <div class="form-grid">
-              <label>Primary goal<input name="goal" placeholder="Example: build muscle, faster 5K PB, lose fat, stronger squat" value="Build muscle" required /></label>
-              <label>Nutrition target<select name="nutrition"><option>Maintenance</option><option>Calorie deficit</option><option selected>Lean surplus</option></select></label>
-              <label>Sleep quality<select name="sleep"><option value="5">Rough</option><option value="7" selected>Okay</option><option value="9">Great</option></select></label>
-              <label>Energy today<select name="energy"><option value="5">Low</option><option value="7">Steady</option><option value="9" selected>High</option></select></label>
-            </div>
-          </div>
-
-          <label>Injuries, limitations, or preferences
-            <textarea name="limitations" rows="4" placeholder="Example: sensitive knees, no running, prefers machines"></textarea>
-          </label>
-
-          <div class="section-block">
-            <p class="kicker">What this affects</p>
-            <div class="coach-guide-grid">
-              <article class="guide-card">
-                <strong>Workout selection</strong>
-                <p>The app swaps exercises based on equipment, injuries, and schedule.</p>
-              </article>
-              <article class="guide-card">
-                <strong>Nutrition targets</strong>
-                <p>Calories and protein targets move with your goal and current training load.</p>
-              </article>
-              <article class="guide-card">
-                <strong>Recovery advice</strong>
-                <p>Sleep, energy, and soreness help adjust the next session before you overdo it.</p>
-              </article>
-            </div>
-          </div>
-
-          <div class="modal-actions">
-            <a class="btn" href="index.html">Back</a>
-            <button class="btn primary" type="submit">Generate My Plans</button>
-          </div>
+        <form id="onboarding-flow" class="onboarding-flow">
+          <div id="onboarding-question" class="conversation-stage"></div>
+          <div id="onboarding-response" class="conversation-response"></div>
+          <div id="onboarding-options" class="choice-grid"></div>
+          <div id="onboarding-actions" class="onboarding-actions"></div>
         </form>
+
+        <div id="generation-sequence" class="generation-sequence" hidden>
+          <p class="kicker">Plan generation</p>
+          <div class="generation-stack">
+            <div class="generation-item active"><span>1</span><strong>Analyzing Recovery Capacity...</strong></div>
+            <div class="generation-item"><span>2</span><strong>Building Training Blocks...</strong></div>
+            <div class="generation-item"><span>3</span><strong>Calculating Progression Strategy...</strong></div>
+            <div class="generation-item"><span>4</span><strong>Designing Nutrition Framework...</strong></div>
+            <div class="generation-item"><span>5</span><strong>Creating Adaptive Coach Profile...</strong></div>
+          </div>
+        </div>
+
+        <section id="plan-reveal" class="plan-reveal" hidden>
+          <p class="kicker">Generated plan</p>
+          <h2>Blueprint ready for activation.</h2>
+          <p id="plan-summary" class="section-copy"></p>
+          <div class="plan-reveal-grid">
+            <div>
+              <span>Today’s mission</span>
+              <strong>Adaptive workout and coach guidance</strong>
+            </div>
+            <div>
+              <span>Next step</span>
+              <strong>Open the Fitness OS dashboard</strong>
+            </div>
+            <div>
+              <span>Coaching mode</span>
+              <strong>Always available</strong>
+            </div>
+          </div>
+          <a class="btn primary" href="dashboard.html">Activate My Plan</a>
+        </section>
       </section>
     </main>
 

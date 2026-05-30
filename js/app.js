@@ -4,6 +4,14 @@
   const defaultState = {
     user: null,
     profile: null,
+    onboarding: {
+      started: false,
+      step: 0,
+      answers: {},
+      generationStep: 0,
+      completed: false,
+      revealed: false
+    },
     sessions: 12,
     streak: 4,
     readiness: 82,
@@ -137,13 +145,126 @@
     { name: "Mobility", image: "assets/workouts/mobility.svg", tag: "recovery" }
   ];
 
+  const onboardingSteps = [
+    {
+      key: "age",
+      prompt: "How old are you?",
+      type: "number",
+      placeholder: "Age",
+      min: 13,
+      max: 90,
+      unit: "years"
+    },
+    {
+      key: "gender",
+      prompt: "How do you identify?",
+      type: "single",
+      options: ["Woman", "Man", "Non-binary", "Prefer not to say"]
+    },
+    {
+      key: "height",
+      prompt: "What is your height?",
+      type: "number",
+      placeholder: "175",
+      min: 90,
+      max: 240,
+      unit: "cm"
+    },
+    {
+      key: "weight",
+      prompt: "What is your current weight?",
+      type: "number",
+      placeholder: "75",
+      min: 30,
+      max: 250,
+      unit: "kg"
+    },
+    {
+      key: "fitnessLevel",
+      prompt: "What is your current fitness level?",
+      type: "single",
+      options: ["Beginner", "Intermediate", "Advanced"]
+    },
+    {
+      key: "workoutExperience",
+      prompt: "What describes your workout experience best?",
+      type: "single",
+      options: ["New to training", "Some experience", "Consistent for years", "Competitive athlete"]
+    },
+    {
+      key: "goal",
+      prompt: "What is your primary goal right now?",
+      type: "single",
+      options: ["Lose Weight", "Build Muscle", "Run Faster", "Improve Fitness", "Sports Performance", "Custom Goal"]
+    },
+    {
+      key: "timeline",
+      prompt: "What timeline do you want to train for?",
+      type: "single",
+      options: ["4 weeks", "8 weeks", "12 weeks", "16 weeks", "Custom timeline"]
+    },
+    {
+      key: "days",
+      prompt: "How many days per week can you realistically train?",
+      type: "single",
+      options: ["2", "3", "4", "5", "6", "7"]
+    },
+    {
+      key: "sessionLength",
+      prompt: "How long can each session be?",
+      type: "single",
+      options: ["20 minutes", "30 minutes", "45 minutes", "60 minutes", "75 minutes", "90 minutes"]
+    },
+    {
+      key: "equipment",
+      prompt: "What equipment do you have access to?",
+      type: "multi",
+      options: ["Bodyweight", "Dumbbells", "Bands", "Gym", "Barbell", "Kettlebells", "Running Track", "Bike", "Other"]
+    },
+    {
+      key: "injuries",
+      prompt: "Do you have any injuries, pain, or limitations?",
+      type: "text",
+      placeholder: "Anything the coach should protect"
+    },
+    {
+      key: "nutritionPreferences",
+      prompt: "Any nutrition preferences I should know about?",
+      type: "single",
+      options: ["Balanced", "High protein", "Calorie deficit", "Lean surplus", "Vegetarian", "Vegan", "Low carb", "Flexible"]
+    },
+    {
+      key: "sleepQuality",
+      prompt: "How is your sleep lately?",
+      type: "single",
+      options: ["Rough", "Okay", "Good", "Great"]
+    },
+    {
+      key: "activityLevel",
+      prompt: "How active are you outside training?",
+      type: "single",
+      options: ["Desk bound", "Lightly active", "Moderately active", "Very active"]
+    }
+  ];
+
+  const generationStages = [
+    "Analyzing Recovery Capacity...",
+    "Building Training Blocks...",
+    "Calculating Progression Strategy...",
+    "Designing Nutrition Framework...",
+    "Creating Adaptive Coach Profile..."
+  ];
+
   let state = loadState();
 
   const $ = (selector) => document.querySelector(selector);
 
   function loadState() {
     try {
-      return { ...defaultState, ...JSON.parse(localStorage.getItem(storageKey)) };
+      const saved = JSON.parse(localStorage.getItem(storageKey));
+      const merged = { ...structuredClone(defaultState), ...saved };
+      merged.onboarding = { ...structuredClone(defaultState.onboarding), ...(saved?.onboarding || {}) };
+      return merged;
     } catch (error) {
       return structuredClone(defaultState);
     }
@@ -317,6 +438,24 @@
   }
 
   function normalizeEquipment(equipment) {
+    if (Array.isArray(equipment)) {
+      const directKeys = equipment
+        .map((item) => String(item || "").trim().toLowerCase())
+        .map((item) => {
+          if (item === "gym") return "full-gym";
+          if (item === "running track") return "treadmill";
+          if (item === "bike") return "bike";
+          if (item === "bands") return "bands";
+          if (item === "other") return "bodyweight";
+          if (item === "kettlebells") return "kettlebell";
+          if (item === "barbell") return "barbell";
+          if (item === "dumbbells") return "dumbbells";
+          if (item === "bodyweight") return "bodyweight";
+          return item;
+        });
+      if (directKeys.length) return [...new Set(directKeys)];
+    }
+
     const detected = detectEquipment(equipment);
     if (detected.length) return detected;
     return ["bodyweight"];
@@ -328,6 +467,78 @@
       .filter((key) => key !== "full-gym" || keys.length === 1)
       .map((key) => equipmentAliases.find((item) => item.key === key)?.label || key);
     return labels.join(", ");
+  }
+
+  function getOnboardingStep() {
+    return onboardingSteps[Math.min(state.onboarding?.step || 0, onboardingSteps.length - 1)];
+  }
+
+  function getOnboardingProgress() {
+    const current = state.onboarding?.step || 0;
+    return Math.min(100, Math.round((current / onboardingSteps.length) * 100));
+  }
+
+  function getOnboardingAnswers() {
+    return state.onboarding?.answers || {};
+  }
+
+  function normalizeOnboardingValue(step, value) {
+    if (step.type === "multi") {
+      return Array.isArray(value) ? value : [value].filter(Boolean);
+    }
+
+    if (step.type === "number") {
+      return String(value || "").trim();
+    }
+
+    return String(value || "").trim();
+  }
+
+  function formatGoalLabel(goal) {
+    const label = String(goal || "").toLowerCase();
+    if (label.includes("lose")) return "Lose Weight";
+    if (label.includes("build")) return "Build Muscle";
+    if (label.includes("run")) return "Run Faster";
+    if (label.includes("sport")) return "Sports Performance";
+    if (label.includes("fitness")) return "Improve Fitness";
+    return String(goal || "General fitness");
+  }
+
+  function buildOnboardingProfile() {
+    const answers = getOnboardingAnswers();
+    const sleepMap = {
+      rough: 5,
+      okay: 7,
+      good: 8,
+      great: 9
+    };
+    const activityMap = {
+      "desk bound": 5,
+      "lightly active": 6,
+      "moderately active": 8,
+      "very active": 9
+    };
+
+    return {
+      name: state.user?.name || state.profile?.name || "Athlete",
+      age: answers.age || state.profile?.age || "30",
+      gender: answers.gender || state.profile?.gender || "Prefer not to say",
+      height: answers.height || state.profile?.height || "175",
+      weight: answers.weight || state.profile?.weight || "75",
+      level: answers.fitnessLevel || state.profile?.level || "Intermediate",
+      workoutExperience: answers.workoutExperience || state.profile?.workoutExperience || "Some experience",
+      goal: formatGoalLabel(answers.goal || state.profile?.goal || "Improve Fitness"),
+      timeline: answers.timeline || state.profile?.timeline || "12 weeks",
+      days: answers.days || state.profile?.days || "3",
+      sessionLength: answers.sessionLength || state.profile?.sessionLength || "45 minutes",
+      equipment: answers.equipment || state.profile?.equipment || ["bodyweight"],
+      limitations: answers.injuries || state.profile?.limitations || "",
+      nutrition: answers.nutritionPreferences || state.profile?.nutrition || "Balanced",
+      sleep: sleepMap[String(answers.sleepQuality || state.profile?.sleepQuality || "okay").toLowerCase()] || state.profile?.sleep || 7,
+      energy: activityMap[String(answers.activityLevel || state.profile?.activityLevel || "moderately active").toLowerCase()] || state.profile?.energy || 7,
+      sleepQuality: answers.sleepQuality || state.profile?.sleepQuality || "Okay",
+      activityLevel: answers.activityLevel || state.profile?.activityLevel || "Moderately active"
+    };
   }
 
   function detectGoal(text) {
@@ -506,6 +717,293 @@
         </div>
       </article>
     `).join("");
+  }
+
+  function renderOnboardingWizard() {
+    const flow = $("#onboarding-flow");
+    if (!flow) return;
+
+    const onboarding = state.onboarding || structuredClone(defaultState.onboarding);
+    const step = getOnboardingStep();
+    const answers = getOnboardingAnswers();
+    const started = Boolean(onboarding.started);
+    const generationActive = Boolean(onboarding.generationStep && onboarding.generationStep < generationStages.length);
+    const revealReady = Boolean(onboarding.revealed);
+
+    const questionValue = answers[step?.key];
+    const isMulti = step?.type === "multi";
+
+    const progress = $("#onboarding-progress");
+    const progressFill = $("#onboarding-progress-fill");
+    const stepLabel = $("#onboarding-step-label");
+    const coachCopy = $("#onboarding-coach-copy");
+    const question = $("#onboarding-question");
+    const response = $("#onboarding-response");
+    const options = $("#onboarding-options");
+    const actionRow = $("#onboarding-actions");
+    const generation = $("#generation-sequence");
+    const reveal = $("#plan-reveal");
+    const summary = $("#plan-summary");
+
+    if (progress) progress.textContent = `${getOnboardingProgress()}%`;
+    if (progressFill) progressFill.style.width = `${getOnboardingProgress()}%`;
+    if (stepLabel) stepLabel.textContent = started ? `Step ${Math.min(onboarding.step + 1, onboardingSteps.length)} of ${onboardingSteps.length}` : `Welcome step`;
+    if (coachCopy) {
+      coachCopy.textContent = started
+        ? "Answer one question at a time. I’ll shape the entire plan as we go."
+        : "I’ll ask the right questions and build your training strategy without a long form.";
+    }
+
+    if (!started) {
+      question.innerHTML = `
+        <div class="conversation-card intro-card">
+          <p class="kicker">AI coach introduction</p>
+          <h2>Welcome to PulsePlan.</h2>
+          <p>I'm your fitness coach. I'll build your entire fitness strategy based on your body, goals, schedule, equipment, and lifestyle.</p>
+          <p class="conversation-note">This takes about 2 minutes.</p>
+        </div>
+      `;
+      if (response) response.innerHTML = "";
+      if (options) {
+        options.innerHTML = `
+          <button class="btn primary full" type="button" data-onboarding-action="start">Let's Build My Plan</button>
+        `;
+      }
+      if (actionRow) actionRow.innerHTML = "";
+      if (generation) generation.hidden = true;
+      if (reveal) reveal.hidden = true;
+      return;
+    }
+
+    if (generationActive) {
+      const visibleStages = generationStages.slice(0, onboarding.generationStep);
+      question.innerHTML = `
+        <div class="generation-panel">
+          <p class="kicker">Plan generation</p>
+          <h2>Building your coaching blueprint.</h2>
+          <div class="generation-stack">
+            ${visibleStages.map((stage, index) => `<div class="generation-item ${index === visibleStages.length - 1 ? "active" : "done"}"><span>${index + 1}</span><strong>${stage}</strong></div>`).join("")}
+          </div>
+        </div>
+      `;
+      if (response) response.innerHTML = "";
+      if (options) options.innerHTML = "";
+      if (actionRow) actionRow.innerHTML = `<button class="btn ghost" type="button" disabled>Generating...</button>`;
+      if (generation) generation.hidden = false;
+      if (reveal) reveal.hidden = true;
+      return;
+    }
+
+    if (revealReady && state.recommendations) {
+      const profile = state.profile || buildOnboardingProfile();
+      const outcome = classifyGoal(profile.goal) === "muscle"
+        ? "+4kg Lean Mass"
+        : classifyGoal(profile.goal) === "race"
+          ? "Faster race pace"
+          : classifyGoal(profile.goal) === "fat-loss"
+            ? "Lower body fat"
+            : "Better fitness and consistency";
+
+      question.innerHTML = `
+        <div class="conversation-card">
+          <p class="kicker">Your fitness blueprint</p>
+          <h2>${profile.name}'s plan is ready.</h2>
+          <p class="section-copy">Projected outcome: ${outcome}. Open the reveal below to activate the plan.</p>
+        </div>
+      `;
+      if (response) response.innerHTML = "";
+      if (options) options.innerHTML = "";
+      if (actionRow) actionRow.innerHTML = "";
+      if (generation) generation.hidden = true;
+      if (reveal) reveal.hidden = false;
+      if (summary) summary.innerHTML = `${profile.goal} | ${profile.timeline} | ${profile.days} days/week`;
+      return;
+    }
+
+    if (question) {
+      question.innerHTML = `<div class="conversation-card"><p class="kicker">Coach</p><h2>${step.prompt}</h2></div>`;
+    }
+
+    if (response) {
+      response.innerHTML = questionValue
+        ? `<span class="response-pill">${Array.isArray(questionValue) ? questionValue.join(", ") : questionValue}</span>`
+        : `<span class="response-hint">Choose an answer to keep going.</span>`;
+    }
+
+    if (options) {
+      if (step.type === "single") {
+        options.innerHTML = step.options.map((item) => `<button class="choice-chip ${String(questionValue || "") === item ? "active" : ""}" type="button" data-onboarding-value="${item}">${item}</button>`).join("");
+      } else if (step.type === "multi") {
+        const selected = Array.isArray(questionValue) ? questionValue : [];
+        options.innerHTML = step.options.map((item) => `<button class="choice-chip ${selected.includes(item) ? "active" : ""}" type="button" data-onboarding-toggle="${item}">${item}</button>`).join("");
+      } else {
+        options.innerHTML = `
+          <label class="answer-field">
+            <span>${step.unit ? `${step.unit}` : "Your answer"}</span>
+            <input id="onboarding-input" name="${step.key}" type="${step.type === "number" ? "number" : "text"}" min="${step.min || ""}" max="${step.max || ""}" placeholder="${step.placeholder || "Type your answer"}" value="${questionValue || ""}" />
+          </label>
+        `;
+      }
+    }
+
+    if (actionRow) {
+      if (step.type === "text" || step.type === "number" || step.type === "multi") {
+        actionRow.innerHTML = `
+          <button class="btn ghost" type="button" data-onboarding-action="back" ${onboarding.step === 0 ? "disabled" : ""}>Back</button>
+          <button class="btn primary" type="button" data-onboarding-action="continue">Continue</button>
+        `;
+      } else {
+        actionRow.innerHTML = `<button class="btn ghost" type="button" data-onboarding-action="back" ${onboarding.step === 0 ? "disabled" : ""}>Back</button>`;
+      }
+    }
+
+    if (generation) generation.hidden = true;
+    if (reveal) reveal.hidden = true;
+  }
+
+  function saveOnboardingAnswer(key, value) {
+    state.onboarding = {
+      ...(state.onboarding || structuredClone(defaultState.onboarding)),
+      answers: {
+        ...(state.onboarding?.answers || {}),
+        [key]: value
+      }
+    };
+    saveState();
+    renderOnboardingWizard();
+  }
+
+  function advanceOnboardingStep() {
+    state.onboarding = {
+      ...(state.onboarding || structuredClone(defaultState.onboarding)),
+      step: Math.min(onboardingSteps.length - 1, (state.onboarding?.step || 0) + 1)
+    };
+    saveState();
+    renderOnboardingWizard();
+  }
+
+  function retreatOnboardingStep() {
+    state.onboarding = {
+      ...(state.onboarding || structuredClone(defaultState.onboarding)),
+      step: Math.max(0, (state.onboarding?.step || 0) - 1)
+    };
+    saveState();
+    renderOnboardingWizard();
+  }
+
+  function startOnboardingGeneration() {
+    state.onboarding = {
+      ...(state.onboarding || structuredClone(defaultState.onboarding)),
+      generationStep: 1,
+      revealed: false,
+      completed: false
+    };
+    saveState();
+    renderOnboardingWizard();
+
+    const tick = () => {
+      const draft = state.onboarding || structuredClone(defaultState.onboarding);
+      if (draft.generationStep >= generationStages.length) {
+        const profile = buildOnboardingProfile();
+        personalizeFromProfile(profile, true);
+        state.onboarding = {
+          ...draft,
+          completed: true,
+          revealed: true,
+          generationStep: generationStages.length
+        };
+        saveState();
+        renderOnboardingWizard();
+        return;
+      }
+
+      state.onboarding = {
+        ...draft,
+        generationStep: draft.generationStep + 1
+      };
+      saveState();
+      renderOnboardingWizard();
+      window.setTimeout(tick, 780);
+    };
+
+    window.setTimeout(tick, 480);
+  }
+
+  function renderFitnessOS() {
+    const profile = state.profile || buildOnboardingProfile();
+    const blueprintTitle = $("#blueprint-title");
+    const blueprintCopy = $("#blueprint-copy");
+    const missionTitle = $("#mission-title");
+    const missionCopy = $("#mission-copy");
+    const roadmapTitle = $("#roadmap-title");
+    const roadmapCopy = $("#roadmap-copy");
+    const goalTrack = $("#goal-track");
+    const progressMap = $("#progress-map");
+    const historyList = $("#history-list");
+    const achievementList = $("#achievement-list");
+    const coachStatus = $("#coach-status");
+    const goalCaloriesDisplay = $("#goal-calories-display");
+    const eatenCaloriesDisplay = $("#eaten-calories-display");
+    const currentGoal = $("#current-goal");
+    const currentGoalCopy = $("#current-goal-copy");
+    const goalBadges = $("#goal-badges");
+    const milestoneTitle = $("#milestone-title");
+    const milestoneCopy = $("#milestone-copy");
+
+    if (blueprintTitle) blueprintTitle.textContent = `${profile.name}'s Fitness Blueprint`;
+    if (blueprintCopy) blueprintCopy.textContent = `${profile.goal} | ${profile.timeline} | ${profile.days} days per week | ${formatEquipment(profile.equipment)}`;
+    if (missionTitle) missionTitle.textContent = `Day ${Math.min(31, state.sessions + 1)} - ${state.workout[0]?.name || "Coach-selected mission"}`;
+    if (missionCopy) missionCopy.textContent = state.recommendations?.rationale || "Your coach is keeping the day focused, adaptive, and realistic.";
+    if (roadmapTitle) roadmapTitle.textContent = "Progress roadmap";
+    if (roadmapCopy) roadmapCopy.textContent = state.recommendations?.progression || "Progress one variable weekly: reps first, then load, then density.";
+    if (currentGoal) currentGoal.textContent = profile.goal;
+    if (currentGoalCopy) currentGoalCopy.textContent = `${profile.days} days per week, ${profile.sessionLength}, ${formatEquipment(profile.equipment)}.`;
+    if (goalBadges) {
+      goalBadges.innerHTML = [profile.timeline, profile.level, profile.sleepQuality || "Balanced"].map((item) => `<span>${item}</span>`).join("");
+    }
+    if (milestoneTitle) milestoneTitle.textContent = classifyGoal(profile.goal) === "muscle" ? "Hit your first progression check" : classifyGoal(profile.goal) === "race" ? "Lock in your next test run" : "Complete this week cleanly";
+    if (milestoneCopy) milestoneCopy.textContent = classifyGoal(profile.goal) === "fat-loss" ? "Maintain consistency, then let the coach reduce volume or adjust nutrition." : "Your next milestone is not perfection. It is clean execution and recovery feedback.";
+    if (goalCaloriesDisplay) goalCaloriesDisplay.textContent = String(state.goalCalories || state.recommendations?.nutrition.calories || 0);
+    if (eatenCaloriesDisplay) eatenCaloriesDisplay.textContent = String(state.eatenCalories || 0);
+    if (goalTrack) {
+      goalTrack.innerHTML = [
+        ["Goal", profile.goal],
+        ["Timeline", profile.timeline],
+        ["Training", `${profile.days} days/week`],
+        ["Readiness", `${state.readiness}/100`]
+      ].map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join("");
+    }
+    if (historyList) {
+      historyList.innerHTML = `
+        <div><strong>${state.sessions}</strong><span>sessions logged</span></div>
+        <div><strong>${state.streak}</strong><span>week streak</span></div>
+        <div><strong>${state.workout.filter((item) => item.done).length}</strong><span>moves completed today</span></div>
+      `;
+    }
+    if (achievementList) {
+      achievementList.innerHTML = [
+        "Adaptive plan active",
+        `${profile.level} training mode`,
+        `${formatEquipment(profile.equipment)} setup`,
+        `${profile.sleepQuality || "Balanced"} recovery`
+      ].map((item) => `<span>${item}</span>`).join("");
+    }
+    if (progressMap) {
+      progressMap.innerHTML = [
+        { label: "Now", value: "Coach-led session", state: "active" },
+        { label: "Soon", value: "Weekly progression check", state: "upcoming" },
+        { label: "Next", value: profile.timeline, state: "future" }
+      ].map((item, index) => `
+        <div class="progress-node ${item.state}">
+          <span>${index + 1}</span>
+          <strong>${item.label}</strong>
+          <small>${item.value}</small>
+        </div>
+      `).join("");
+    }
+    if (coachStatus) {
+      coachStatus.textContent = state.recommendations?.conditioning || "Coach is ready to swap workouts, change intensity, or explain the plan.";
+    }
   }
 
   function renderLoadChart() {
@@ -739,6 +1237,84 @@
     $("#exercise-equipment-filter")?.addEventListener("change", renderExercises);
     $("#exercise-muscle-filter")?.addEventListener("change", renderExercises);
 
+    $("#onboarding-flow")?.addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+
+      const action = button.dataset.onboardingAction;
+      const value = button.dataset.onboardingValue;
+      const toggleValue = button.dataset.onboardingToggle;
+      const currentStep = getOnboardingStep();
+      const answers = getOnboardingAnswers();
+
+      if (action === "start") {
+        state.onboarding = {
+          ...(state.onboarding || structuredClone(defaultState.onboarding)),
+          started: true,
+          step: 0
+        };
+        saveState();
+        renderOnboardingWizard();
+        return;
+      }
+
+      if (action === "back") {
+        retreatOnboardingStep();
+        return;
+      }
+
+      if (action === "continue") {
+        const input = $("#onboarding-input");
+        const nextValue = normalizeOnboardingValue(currentStep, input?.value || "");
+        if (!nextValue) return;
+        saveOnboardingAnswer(currentStep.key, nextValue);
+        if (state.onboarding.step < onboardingSteps.length - 1) {
+          advanceOnboardingStep();
+        } else {
+          startOnboardingGeneration();
+        }
+        return;
+      }
+
+      if (action === "activate") {
+        window.location.href = "dashboard.html";
+        return;
+      }
+
+      if (value && currentStep?.type === "single") {
+        saveOnboardingAnswer(currentStep.key, value);
+        if (state.onboarding.step < onboardingSteps.length - 1) {
+          advanceOnboardingStep();
+        } else {
+          startOnboardingGeneration();
+        }
+        return;
+      }
+
+      if (toggleValue && currentStep?.type === "multi") {
+        const selected = Array.isArray(answers[currentStep.key]) ? answers[currentStep.key] : [];
+        const nextSelection = selected.includes(toggleValue)
+          ? selected.filter((item) => item !== toggleValue)
+          : [...selected, toggleValue];
+        saveOnboardingAnswer(currentStep.key, nextSelection);
+      }
+    });
+
+    $("#onboarding-flow")?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const currentStep = getOnboardingStep();
+      if (!currentStep) return;
+      const input = $("#onboarding-input");
+      const nextValue = normalizeOnboardingValue(currentStep, input?.value || "");
+      if (!nextValue) return;
+      saveOnboardingAnswer(currentStep.key, nextValue);
+      if (state.onboarding.step < onboardingSteps.length - 1) {
+        advanceOnboardingStep();
+      } else {
+        startOnboardingGeneration();
+      }
+    });
+
     $("#add-program")?.addEventListener("click", () => {
       const number = state.programs.length + 1;
       state.programs.push({
@@ -779,6 +1355,15 @@
       setTimeout(() => appendMessage("bot", coachReply(text)), 250);
     });
 
+    document.querySelectorAll("[data-coach-prompt]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const input = $("#chat-input");
+        if (!input) return;
+        input.value = button.dataset.coachPrompt || "";
+        input.focus();
+      });
+    });
+
     $("#clear-chat")?.addEventListener("click", () => {
       state.chat = structuredClone(defaultState.chat);
       saveState();
@@ -813,7 +1398,7 @@
       const data = Object.fromEntries(new FormData(event.currentTarget).entries());
       state.user = state.user || { name: data.email.split("@")[0], email: data.email };
       saveState();
-      window.location.href = state.profile ? "dashboard.html" : "onboarding.html";
+      window.location.href = "onboarding.html";
     });
   }
 
@@ -834,6 +1419,25 @@
       personalizeFromProfile(profile);
       window.location.href = "dashboard.html";
     });
+  }
+
+  function initOnboardingWizard() {
+    if (!$("#onboarding-flow")) return;
+    state.onboarding = { ...structuredClone(defaultState.onboarding), ...(state.onboarding || {}) };
+    if (state.profile && !state.onboarding.revealed) {
+      state.onboarding = {
+        ...state.onboarding,
+        started: true,
+        step: onboardingSteps.length - 1
+      };
+    }
+    saveState();
+    renderOnboardingWizard();
+  }
+
+  function initFitnessOS() {
+    if (!$("#dashboard-os")) return;
+    renderFitnessOS();
   }
 
   function buildWorkout(data) {
@@ -900,6 +1504,8 @@
     renderWorkoutIcons();
     renderLoadChart();
     renderRecommendations();
+    renderOnboardingWizard();
+    renderFitnessOS();
     renderChat();
     computeCalories();
     updateReadiness();
@@ -908,6 +1514,8 @@
   document.addEventListener("DOMContentLoaded", () => {
     initAuth();
     initProfileForm();
+    initOnboardingWizard();
+    initFitnessOS();
     initEvents();
     renderAll();
   });
