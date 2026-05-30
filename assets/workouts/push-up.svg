@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Push-up illustration</title>
+  <desc id="desc">Simple line art showing a push-up position.</desc>
+  <rect width="800" height="500" rx="36" fill="#0d1720"/>
+  <path d="M110 360h580" stroke="#27465a" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="270" cy="250" r="34" fill="#f0fbff"/>
+  <path d="M304 268l88 44 80 0 76-34" fill="none" stroke="#6ef3d6" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M390 312l-60 78" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M390 312l104 66" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M334 390h90" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M500 312l44 92" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M578 302l38 102" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="236" cy="138" r="62" fill="none" stroke="#3f79ff" stroke-width="10" opacity="0.6"/>
+  <path d="M178 132h116" stroke="#3f79ff" stroke-width="8" stroke-linecap="round" opacity="0.8"/>
+</svg>

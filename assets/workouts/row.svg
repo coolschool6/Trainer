@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Rowing illustration</title>
+  <desc id="desc">Simple line art showing a bent-over row.</desc>
+  <rect width="800" height="500" rx="36" fill="#0d1720"/>
+  <path d="M120 390h560" stroke="#27465a" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="286" cy="168" r="34" fill="#f0fbff"/>
+  <path d="M286 202l92 44 84 8 94-42" fill="none" stroke="#6ef3d6" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M378 246l-48 84" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M378 246l88 48" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M330 330l-18 60" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M466 294l38 74" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M258 390h86" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M540 390h82" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="612" cy="154" r="64" fill="none" stroke="#3f79ff" stroke-width="10" opacity="0.65"/>
+</svg>

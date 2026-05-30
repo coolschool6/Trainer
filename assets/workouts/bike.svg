@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Cycling illustration</title>
+  <desc id="desc">Simple line art showing a cyclist on a bike.</desc>
+  <rect width="800" height="500" rx="36" fill="#0d1720"/>
+  <circle cx="242" cy="350" r="88" fill="none" stroke="#6ef3d6" stroke-width="12"/>
+  <circle cx="564" cy="350" r="88" fill="none" stroke="#3f79ff" stroke-width="12"/>
+  <circle cx="404" cy="160" r="34" fill="#f0fbff"/>
+  <path d="M404 194l-72 78 76 18 70-52 86 30" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M332 272l-90 78" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M490 258l78 92" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M350 346h120" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M404 194l34 74 92 0" fill="none" stroke="#6ef3d6" stroke-width="12" stroke-linecap="round"/>
+  <path d="M272 350h220" stroke="#27465a" stroke-width="10" stroke-linecap="round"/>
+</svg>

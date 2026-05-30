@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Deadlift illustration</title>
+  <desc id="desc">Simple line art showing a deadlift lockout with a barbell.</desc>
+  <rect width="800" height="500" rx="36" fill="#0d1720"/>
+  <path d="M112 396h576" stroke="#27465a" stroke-width="10" stroke-linecap="round"/>
+  <path d="M240 322h320" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M240 322l-46-24" stroke="#6ef3d6" stroke-width="12" stroke-linecap="round"/>
+  <path d="M560 322l46-24" stroke="#6ef3d6" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="196" cy="322" r="24" fill="#3f79ff"/>
+  <circle cx="644" cy="322" r="24" fill="#3f79ff"/>
+  <circle cx="392" cy="174" r="38" fill="#f0fbff"/>
+  <path d="M392 212v92" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M392 244l-82 72" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M392 244l84 88" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M310 316l-44 80" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M476 332l42 64" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M330 390h130" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="392" cy="108" r="72" fill="none" stroke="#3f79ff" stroke-width="10" opacity="0.65"/>
+</svg>

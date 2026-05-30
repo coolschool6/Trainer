@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Running illustration</title>
+  <desc id="desc">Simple line art showing a running athlete in motion.</desc>
+  <rect width="800" height="500" rx="36" fill="#0d1720"/>
+  <path d="M110 370h580" stroke="#27465a" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="368" cy="146" r="34" fill="#f0fbff"/>
+  <path d="M368 180l-42 86 54 38 36-66 58 30" fill="none" stroke="#6ef3d6" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M336 264l-70 58" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M420 260l92 28" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M330 306l-74 80" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M398 306l24 90" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M452 286l84 76" fill="none" stroke="#f0fbff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M470 122c26 10 52 28 76 54" fill="none" stroke="#3f79ff" stroke-width="10" stroke-linecap="round" opacity="0.8"/>
+  <path d="M500 92c42 18 86 50 126 100" fill="none" stroke="#3f79ff" stroke-width="10" stroke-linecap="round" opacity="0.55"/>
+</svg>
